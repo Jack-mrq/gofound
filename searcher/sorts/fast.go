@@ -13,24 +13,34 @@ const (
 
 type ScoreSlice []model.SliceItem
 
+//返回长度
 func (x ScoreSlice) Len() int {
 	return len(x)
 }
+
+//比较
 func (x ScoreSlice) Less(i, j int) bool {
 	return x[i].Score < x[j].Score
 }
+
+//go独有的交换方式
 func (x ScoreSlice) Swap(i, j int) {
 	x[i], x[j] = x[j], x[i]
 }
 
 type SortSlice []uint32
 
+//返回长度
 func (x SortSlice) Len() int {
 	return len(x)
 }
+
+//比较大小
 func (x SortSlice) Less(i, j int) bool {
 	return x[i] < x[j]
 }
+
+//交换
 func (x SortSlice) Swap(i, j int) {
 	x[i], x[j] = x[j], x[i]
 
@@ -43,7 +53,7 @@ func (x Uint32Slice) Less(i, j int) bool { return x[i] < x[j] }
 func (x Uint32Slice) Swap(i, j int)      { x[i], x[j] = x[j], x[i] }
 
 type FastSort struct {
-	sync.Mutex
+	sync.Mutex //锁
 
 	IsDebug bool
 
@@ -109,6 +119,7 @@ func (f *FastSort) Count() int {
 
 // Sort 排序
 func (f *FastSort) Sort() {
+	//转换成小写
 	if strings.ToLower(f.Order) == DESC {
 		sort.Sort(sort.Reverse(SortSlice(f.temps)))
 	} else {

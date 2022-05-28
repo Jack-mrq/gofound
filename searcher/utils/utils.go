@@ -131,6 +131,7 @@ var (
 	Seed = uint32(1)
 )
 
+//哈希算法
 func Murmur3(key []byte) (hash uint32) {
 	hash = Seed
 	iByte := 0
@@ -250,6 +251,7 @@ func ReleaseAssets(file fs.File, out string) {
 			panic(err)
 		}
 		buffer := make([]byte, fileInfo.Size())
+		//读取file内容到buffer
 		_, err = file.Read(buffer)
 		if err != nil {
 			panic(err)
@@ -257,13 +259,15 @@ func ReleaseAssets(file fs.File, out string) {
 
 		// 读取输出文件目录
 		outDir := filepath.Dir(out)
+		//创建目录, 如果存在返回nil
 		err = os.MkdirAll(outDir, os.ModePerm)
 		if err != nil {
 			panic(err)
 		}
 
-		//创建文件
+		//创建文件, 如果文件存在会清空
 		outFile, _ := os.Create(out)
+		//关闭
 		defer func(outFile *os.File) {
 			err := outFile.Close()
 			if err != nil {

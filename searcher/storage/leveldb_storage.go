@@ -18,7 +18,7 @@ func Open(path string) (*LeveldbStorage, error) {
 	o := &opt.Options{
 		Filter: filter.NewBloomFilter(10),
 	}
-
+	//建立数据库
 	db, err := leveldb.OpenFile(path, o)
 	if err != nil {
 		return nil, err

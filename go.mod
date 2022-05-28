@@ -4,6 +4,7 @@ go 1.18
 
 require (
 	github.com/emirpasic/gods v1.12.0
+	github.com/gin-contrib/gzip v0.0.5
 	github.com/gin-gonic/gin v1.7.7
 	github.com/ryszard/goskiplist v0.0.0-20150312221310-2dfbae5fcf46
 	github.com/shirou/gopsutil/v3 v3.22.4
@@ -12,7 +13,6 @@ require (
 )
 
 require (
-	github.com/gin-contrib/gzip v0.0.5 // indirect
 	github.com/gin-contrib/sse v0.1.0 // indirect
 	github.com/go-ole/go-ole v1.2.6 // indirect
 	github.com/go-playground/locales v0.13.0 // indirect

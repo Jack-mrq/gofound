@@ -53,7 +53,7 @@ func (e *Engine) Init() {
 		e.Option = e.GetOptions()
 	}
 	log.Println("数据存储目录：", e.IndexPath)
-
+	//创建索引通道
 	e.addDocumentWorkerChan = make([]chan *model.IndexDoc, e.Shard)
 	//初始化文件存储
 	for shard := 0; shard < e.Shard; shard++ {
@@ -116,6 +116,7 @@ func (e *Engine) GetQueue() int {
 // DocumentWorkerExec 添加文档队列
 func (e *Engine) DocumentWorkerExec(worker chan *model.IndexDoc) {
 	for {
+		//若无数据会阻塞
 		doc := <-worker
 		e.AddDocument(doc)
 	}
@@ -164,7 +165,7 @@ func (e *Engine) AddDocument(index *model.IndexDoc) {
 	//等待初始化完成
 	e.Wait()
 	text := index.Text
-
+	//分词
 	splitWords := e.Tokenizer.Cut(text)
 
 	//id对应的词
@@ -178,6 +179,7 @@ func (e *Engine) AddDocument(index *model.IndexDoc) {
 		return
 	}
 
+	//添加倒排索引
 	for _, word := range splitWords {
 		e.addInvertedIndex(word, id)
 	}
@@ -233,6 +235,7 @@ func (e *Engine) optimizeIndex(id uint32, newWords []string) bool {
 
 }
 
+//删除word对应的ids中的id
 func (e *Engine) removeIdInWordIndex(id uint32, word string) {
 
 	shard := e.getShardByWord(word)
@@ -333,7 +336,7 @@ func (e *Engine) MultiSearch(request *model.SearchRequest) *model.SearchResult {
 		base := len(words)
 		wg := &sync.WaitGroup{}
 		wg.Add(base)
-
+		//对每个关键词进行搜索
 		for _, word := range words {
 			go e.processKeySearch(word, fastSort, wg, base)
 		}
@@ -372,7 +375,7 @@ func (e *Engine) MultiSearch(request *model.SearchRequest) *model.SearchResult {
 
 		//读取单页的id
 		if pager.PageCount != 0 {
-
+			//获得起始和结束
 			start, end := pager.GetPage(request.Page)
 
 			var resultItems = make([]model.SliceItem, 0)

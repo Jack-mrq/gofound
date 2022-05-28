@@ -22,6 +22,7 @@ func BinarySearch(arr []uint32, target uint32) bool {
 	return false
 }
 
+//遍历字符串数组
 func ArrayStringExists(arr []string, str string) bool {
 
 	for _, v := range arr {
@@ -34,6 +35,7 @@ func ArrayStringExists(arr []string, str string) bool {
 }
 
 // MergeArrayUint32 合并两个数组
+//question ? source 为什么加在后面
 func MergeArrayUint32(target []uint32, source []uint32) []uint32 {
 
 	for _, val := range source {
@@ -44,6 +46,7 @@ func MergeArrayUint32(target []uint32, source []uint32) []uint32 {
 	return target
 }
 
+//找到对应值，并返回下标
 func Find(arr []uint32, target uint32) int {
 	for index, v := range arr {
 		if v == target {

@@ -31,7 +31,7 @@ type Args struct {
 }
 
 func parseArgs() Args {
-
+	//name value usage
 	var addr = flag.String("addr", "0.0.0.0:5678", "设置监听地址和端口")
 	//兼容windows
 	dir := fmt.Sprintf(".%sdata", string(os.PathSeparator))
@@ -67,6 +67,7 @@ func parseArgs() Args {
 	}
 }
 
+//初始化分词器
 func initTokenizer(dictionaryPath string) *words.Tokenizer {
 	return words.NewTokenizer(dictionaryPath)
 }

@@ -16,8 +16,10 @@ type Tokenizer struct {
 	seg jiebago.Segmenter
 }
 
+//初始化分词器
 func NewTokenizer(dictionaryPath string) *Tokenizer {
 	file, err := dictionaryFS.Open("data/dictionary.txt")
+	//判断是否存在文件
 	if err != nil {
 		panic(err)
 	}

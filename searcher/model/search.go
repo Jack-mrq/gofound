@@ -15,6 +15,7 @@ type SearchRequest struct {
 	Highlight *Highlight `json:"highlight,omitempty"` // 关键词高亮
 }
 
+//初始化
 func (s *SearchRequest) GetAndSetDefault() *SearchRequest {
 
 	if s.Limit == 0 {
